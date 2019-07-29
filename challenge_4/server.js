@@ -18,21 +18,43 @@ app.get( '/getTable', (req, res) => {
         }
         // when webpack is set up, check console.log and continue
         // to pass the table to app.jsx and save in state
-        // console.log(data);
+        res.send(data);
     })
 })
 
-app.post( '/changeRow', (req, res) => {
-    console.log(req.body);
-    db.replaceRow( (err, data) => {
-        if (err) {
-            console.error(err);
-            res.end();
+app.post( '/changeCell', (req, res) => {
+    let table = req.body.table;
+    table.map( element => {
+        let column = `${req.body.changeInfo.className}`;
+        let columnValue = `${req.body.changeInfo.className}Value`;
+        // console.log(element)
+        if (element.id == req.body.changeInfo.id) {
+            table.columnValue = 'Clicked';
         }
-        // like with the get request, once I can visually see things 
-        // and pass info, I can finish this function
-        // console.log(data);
+        if (element.id == req.body.changeInfo.id+1) {
+            table.columnValue = 'Clicked';
+        }
     })
+    table.map( element => {
+        // console.log(element)
+        db.replaceRow( element, (err, data) => {
+            if (err) {
+                console.error(err);
+                res.end();
+            }
+        })
+    })
+    res.send('Cells were updated.')
+    // db.replaceRow( req.body, (err, data) => {
+    //     if (err) {
+    //         console.error(err);
+    //         res.end();
+    //     }
+    //     // like with the get request, once I can visually see things 
+    //     // and pass info, I can finish this function
+    //     // console.log(data);
+    //     res.send('Cell has updated!');
+    // })
 })
 
 

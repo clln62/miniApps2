@@ -26,12 +26,10 @@ const getTable = (callback) => {
     });
 }
 
-const replaceRow = (row, callback) => {
-    const queryString = `REPLACE INTO minesweeper (id, column1, 
-        column1Value, column2, column2Value, column3, column3Value, 
-        column4, column4Value, column5, column5Value, column6, 
-        column6Value, column7, column7Value, column8, column8Value, 
-        column9, column9Value, column10, column10Value) VALUES (${row.id});`;
+const replaceRow = (cell, callback) => {
+    console.log(cell)
+    // const queryString = `UPDATE minesweeper SET ${cell.className}Value = 'Clicked' WHERE id = ${cell.id};`;
+    const queryString = `REPLACE INTO minesweeper (id, ${cell.className}Value) VALUES (${cell.id}, 'clicked');`;
         // need to finish the queryString once I can pass information and 
         // visually see what I get back
 
